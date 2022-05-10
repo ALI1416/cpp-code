@@ -2,29 +2,27 @@
 #include <conio.h>
 #define MAX_PSD_LEN 20
 
-char PassWord[MAX_PSD_LEN],*p=PassWord,ch;
-int count=0;
+char PassWord[MAX_PSD_LEN], *p = PassWord, ch;
+int count = 0;
 void main()
 {
-	printf("input password:");
-	
-    ch=getch();   //ÊäÈëÒ»¸ö×Ö·û£¬µ«²»ÏÔÊ¾
-    while(ch!=13&&count<MAX_PSD_LEN-1)       /*µ±°´ÏÂ»Ø³µ¼ü»òÃÜÂë³¤¶È´ïµ½19£¬ÔòÍË³öÑ­»·*/
+  printf("input password:");
+
+  ch = getch();                               //è¾“å…¥ä¸€ä¸ªå­—ç¬¦ï¼Œä½†ä¸æ˜¾ç¤º
+  while (ch != 13 && count < MAX_PSD_LEN - 1) /*å½“æŒ‰ä¸‹å›è½¦é”®æˆ–å¯†ç é•¿åº¦è¾¾åˆ°19ï¼Œåˆ™é€€å‡ºå¾ªç¯*/
+  {
+
+    if ((ch <= 'Z' && ch >= 'A') || (ch <= 'z' && ch >= 'a') || (ch <= '9' && ch >= '0'))
+    /*å¦‚æœè¾“å…¥çš„æ˜¯å¯†ç çš„æœ‰æ•ˆå­—ç¬¦*/
     {
-       
-         if((ch<='Z'&&ch>='A')||(ch<='z'&&ch>='a')||(ch<='9'&&ch>='0'))
-                                                  /*Èç¹ûÊäÈëµÄÊÇÃÜÂëµÄÓĞĞ§×Ö·û*/
-        {
-            printf("*");          /*Êä³öÒ»¸öĞÇºÅ*/
-            count++;
-            *p=ch;                /*¼ÇÂ¼ÃÜÂëÄÚÈİ*/
-            p++;
-        }
-        ch=getch();                    /*µÈ´ıÊäÈëÏÂÒ»¸ö×Ö·û*/
+      printf("*"); /*è¾“å‡ºä¸€ä¸ªæ˜Ÿå·*/
+      count++;
+      *p = ch; /*è®°å½•å¯†ç å†…å®¹*/
+      p++;
     }
-    PassWord[count]=0;
-    printf("\nThe Password you input is:\n");
-    printf("%s\n",PassWord);
+    ch = getch(); /*ç­‰å¾…è¾“å…¥ä¸‹ä¸€ä¸ªå­—ç¬¦*/
+  }
+  PassWord[count] = 0;
+  printf("\nThe Password you input is:\n");
+  printf("%s\n", PassWord);
 }
-
-

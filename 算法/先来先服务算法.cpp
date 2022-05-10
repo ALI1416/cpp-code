@@ -1,94 +1,127 @@
-#include<stdio.h>
-#define N 10	//×î´ó½ø³ÌÊı
-#define T 100	//×î´óÊ±¼ä³¤¶È
-#define M 100	//×î´ó¶ÓÁĞÊı
+#include <stdio.h>
 
-int queue[M]={0};	//¶ÓÁĞ
-int head=0;	//¶ÓÍ·
-int end=0;	//¶ÓÎ²
+#define N 10  //æœ€å¤§è¿›ç¨‹æ•°
+#define T 100 //æœ€å¤§æ—¶é—´é•¿åº¦
+#define M 100 //æœ€å¤§é˜Ÿåˆ—æ•°
 
-void queue_in(int i){	//Èë¶Ó
-	queue[end++]=i;
+int queue[M] = {0}; //é˜Ÿåˆ—
+int head = 0;       //é˜Ÿå¤´
+int end = 0;        //é˜Ÿå°¾
+
+//å…¥é˜Ÿ
+void queue_in(int i)
+{
+  queue[end++] = i;
 }
 
-int queue_out(){	//³ö¶Ó
-	return queue[head++];
+//å‡ºé˜Ÿ
+int queue_out()
+{
+  return queue[head++];
 }
 
-int queue_empty(){	//¶Ó¿Õ
-	if(end==head)
-		return 1;
-	return 0;
+//é˜Ÿç©º
+int queue_empty()
+{
+  if (end == head)
+    return 1;
+  return 0;
 }
 
-void main(){
-	int i,j;		//ÖĞ¼ä±äÁ¿
-	int n;			//½ø³ÌÊıÁ¿
-	int arrive[N];	//µ½´ïÊ±¼ä
-	int serve[N];	//·şÎñÊ±¼ä
-	int serve_copy[N];	//·şÎñÊ±¼ä¿½±´
-	int start[N];	//¿ªÊ¼Ö´ĞĞÊ±¼ä
-	int finish[N];		//½áÊøÖ´ĞĞÊ±¼ä
-	int interval[N];	//ÖÜ×ªÊ±¼ä
-	float interval_average[N];	//Æ½¾ùÖÜ×ªÊ±¼ä
-	int running=-1;	//ÕıÔÚÔËĞĞµÄ½ø³ÌĞòºÅ
-	int end_number=0;	//Íê³É½ø³Ì¸öÊı
-	
-	printf("ÏÈÀ´ÏÈ·şÎñËã·¨£º\n\nÇëÊäÈë½ø³Ì¸öÊı ");
-	scanf("%d",&n);
-	for(i=0;i<n;i++){
-		printf("ÇëÊäÈëµÚ %d ¸ö½ø³ÌµÄ µ½´ïÊ±¼ä ºÍ ·şÎñÊ±¼ä ",i);
-		scanf("%d%d",&arrive[i],&serve[i]);
-	}
-	
-	for(i=0;i<n;i++){	//¿½±´·şÎñÊ±¼ä
-		serve_copy[i]=serve[i];
-	}
-	printf("\nÔËĞĞË³ĞòÎª£º\n");
-	for(i=0;i<T;i++){	//ÏÖÔÚÊ±¼äÒÀ´Î+1
-		if(end_number==n){	//ËùÓĞ½ø³ÌÒÑÍê³É
-			break;	//ÍË³öÑ­»·
-		}
-		
-		for(j=0;j<n;j++){	//²éÕÒµ½´ï½ø³Ì
-			if(arrive[j]==i){	//´æÔÚµ½´ïÊ±¼äÎªÏÖÔÚÊ±¼äµÄ½ø³Ì
-				queue_in(j);	//·Å½ø¶ÓÁĞ
-			}
-		}
-		
-		if(queue_empty()==1&&running==-1){	//ÌØÊâÇé¿ö£¬cpuÓĞ¿ÕÏĞ
-			printf("ÎŞ ");	//ÔËĞĞË³Ğò
-			continue;	//¶ÓÁĞÎª¿Õ£¬Ã»ÓĞÕıÔÚÔËĞĞµÄ½ø³Ì£¬²¢ÇÒ»¹ÓĞ½ø³ÌÎ´Ö´ĞĞ
-		}
-		
-		if(running==-1){	//Ã»ÓĞÕıÔÚÔËĞĞµÄ½ø³Ì
-			running=queue_out();	//¶ÓÁĞÈ¡³ö
-			start[running]=i;	//¼ÇÂ¼¸Ã½ø³Ì¿ªÊ¼Ê±¼ä
-			printf("%d ",running);	//ÔËĞĞË³Ğò
-			serve_copy[running]--;	//·şÎñÊ±¼ä--
-			if(serve_copy[running]==0){	//ÌØÊâÇé¿ö£¬¸Ã½ø³Ì·şÎñÊ±¼äÎª1
-				finish[running]=i+1;	//½áÊøÊ±¼äÎªµ±Ç°Ê±¼ä+1
-				running=-1;	//±ê¼ÇÎŞ½ø³ÌÔÚÔËĞĞ
-				end_number++;	//Íê³É½ø³Ì+1
-			}
-		}else{	//½ø³ÌÕıÔÚÔËĞĞ
-			printf("%d ",running);	//ÔËĞĞË³Ğò
-			serve_copy[running]--;	//·şÎñÊ±¼ä--
-			if(serve_copy[running]==0){	//¸Ã½ø³ÌÒÑÔËĞĞ½áÊø
-				finish[running]=i+1;	//½áÊøÊ±¼äÎªµ±Ç°Ê±¼ä+1
-				running=-1;	//±ê¼ÇÎŞ½ø³ÌÔÚÔËĞĞ
-				end_number++;	//Íê³É½ø³Ì+1
-			}			
-		}
-	}
-	
-	for(i=0;i<n;i++){	//¼ÆËãÖÜ×ªºÍÆ½¾ùÖÜ×ª
-		interval[i]=finish[i]-arrive[i];
-		interval_average[i]=(float)interval[i]/serve[i];
-	}
-	
-	printf("\n\n½ø³Ì\tµ½´ï\t·şÎñ\t¿ªÊ¼\t½áÊø\tÖÜ×ª\tÆ½¾ùÖÜ×ª\n");
-	for(i=0;i<n;i++){
-		printf("%d\t%d\t%d\t%d\t%d\t%d\t%.2f\n",i,arrive[i],serve[i],start[i],finish[i],interval[i],interval_average[i]);
-	}
+void main()
+{
+  int i, j;                  //ä¸­é—´å˜é‡
+  int n;                     //è¿›ç¨‹æ•°é‡
+  int arrive[N];             //åˆ°è¾¾æ—¶é—´
+  int serve[N];              //æœåŠ¡æ—¶é—´
+  int serve_copy[N];         //æœåŠ¡æ—¶é—´æ‹·è´
+  int start[N];              //å¼€å§‹æ‰§è¡Œæ—¶é—´
+  int finish[N];             //ç»“æŸæ‰§è¡Œæ—¶é—´
+  int interval[N];           //å‘¨è½¬æ—¶é—´
+  float interval_average[N]; //å¹³å‡å‘¨è½¬æ—¶é—´
+  int running = -1;          //æ­£åœ¨è¿è¡Œçš„è¿›ç¨‹åºå·
+  int end_number = 0;        //å®Œæˆè¿›ç¨‹ä¸ªæ•°
+
+  printf("å…ˆæ¥å…ˆæœåŠ¡ç®—æ³•ï¼š\n\nè¯·è¾“å…¥è¿›ç¨‹ä¸ªæ•° ");
+  scanf("%d", &n);
+  for (i = 0; i < n; i++)
+  {
+    printf("è¯·è¾“å…¥ç¬¬ %d ä¸ªè¿›ç¨‹çš„ åˆ°è¾¾æ—¶é—´ å’Œ æœåŠ¡æ—¶é—´ ", i);
+    scanf("%d%d", &arrive[i], &serve[i]);
+  }
+
+  //æ‹·è´æœåŠ¡æ—¶é—´
+  for (i = 0; i < n; i++)
+  {
+    serve_copy[i] = serve[i];
+  }
+  printf("\nè¿è¡Œé¡ºåºä¸ºï¼š\n");
+
+  //ç°åœ¨æ—¶é—´ä¾æ¬¡+1
+  for (i = 0; i < T; i++)
+  {
+    //æ‰€æœ‰è¿›ç¨‹å·²å®Œæˆ
+    if (end_number == n)
+    { //é€€å‡ºå¾ªç¯
+      break;
+    }
+
+    //æŸ¥æ‰¾åˆ°è¾¾è¿›ç¨‹
+    for (j = 0; j < n; j++)
+    {
+      //å­˜åœ¨åˆ°è¾¾æ—¶é—´ä¸ºç°åœ¨æ—¶é—´çš„è¿›ç¨‹
+      if (arrive[j] == i)
+      { //æ”¾è¿›é˜Ÿåˆ—
+        queue_in(j);
+      }
+    }
+
+    //ç‰¹æ®Šæƒ…å†µï¼Œcpuæœ‰ç©ºé—²
+    if (queue_empty() == 1 && running == -1)
+    {
+      //è¿è¡Œé¡ºåº
+      printf("æ—  ");
+      //é˜Ÿåˆ—ä¸ºç©ºï¼Œæ²¡æœ‰æ­£åœ¨è¿è¡Œçš„è¿›ç¨‹ï¼Œå¹¶ä¸”è¿˜æœ‰è¿›ç¨‹æœªæ‰§è¡Œ
+      continue;
+    }
+
+    //æ²¡æœ‰æ­£åœ¨è¿è¡Œçš„è¿›ç¨‹
+    if (running == -1)
+    {
+      running = queue_out();  //é˜Ÿåˆ—å–å‡º
+      start[running] = i;     //è®°å½•è¯¥è¿›ç¨‹å¼€å§‹æ—¶é—´
+      printf("%d ", running); //è¿è¡Œé¡ºåº
+      serve_copy[running]--;  //æœåŠ¡æ—¶é—´--
+      if (serve_copy[running] == 0)
+      {                          //ç‰¹æ®Šæƒ…å†µï¼Œè¯¥è¿›ç¨‹æœåŠ¡æ—¶é—´ä¸º1
+        finish[running] = i + 1; //ç»“æŸæ—¶é—´ä¸ºå½“å‰æ—¶é—´+1
+        running = -1;            //æ ‡è®°æ— è¿›ç¨‹åœ¨è¿è¡Œ
+        end_number++;            //å®Œæˆè¿›ç¨‹+1
+      }
+    }
+    else
+    {                         //è¿›ç¨‹æ­£åœ¨è¿è¡Œ
+      printf("%d ", running); //è¿è¡Œé¡ºåº
+      serve_copy[running]--;  //æœåŠ¡æ—¶é—´--
+      if (serve_copy[running] == 0)
+      {                          //è¯¥è¿›ç¨‹å·²è¿è¡Œç»“æŸ
+        finish[running] = i + 1; //ç»“æŸæ—¶é—´ä¸ºå½“å‰æ—¶é—´+1
+        running = -1;            //æ ‡è®°æ— è¿›ç¨‹åœ¨è¿è¡Œ
+        end_number++;            //å®Œæˆè¿›ç¨‹+1
+      }
+    }
+  }
+
+  //è®¡ç®—å‘¨è½¬å’Œå¹³å‡å‘¨è½¬
+  for (i = 0; i < n; i++)
+  {
+    interval[i] = finish[i] - arrive[i];
+    interval_average[i] = (float)interval[i] / serve[i];
+  }
+
+  printf("\n\nè¿›ç¨‹\tåˆ°è¾¾\tæœåŠ¡\tå¼€å§‹\tç»“æŸ\tå‘¨è½¬\tå¹³å‡å‘¨è½¬\n");
+  for (i = 0; i < n; i++)
+  {
+    printf("%d\t%d\t%d\t%d\t%d\t%d\t%.2f\n", i, arrive[i], serve[i], start[i], finish[i], interval[i], interval_average[i]);
+  }
 }

@@ -1,38 +1,41 @@
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
 #define N 8
 
 char *lim()
 {
-	int i=0;
-	char ch;
-	char *s=(char *)malloc(sizeof(char)*N);
-	while(1)
-	{
-		ch=getch();
-		if(ch>=32&&ch<=127&&i<=N-1)//ÓÐÐ§ÊäÈë×Ö·û
-		{
-			s[i++]=ch;
-			printf("*");//Êä³ö'*'
-			//printf("%c",ch);//Êä³ö×Ö·û
-		}
-		if(ch==8&&i>0)//ÍË¸ñ
-		{
-			i--;
-			printf("\b \b");
-		}
-		if(ch==13&&i>0)//»Ø³µ
-		{
-			s[i]=0;
-			return s;
-		}
-	}
+  int i = 0;
+  char ch;
+  char *s = (char *)malloc(sizeof(char) * N);
+  while (1)
+  {
+    ch = getch();
+    //æœ‰æ•ˆè¾“å…¥å­—ç¬¦
+    if (ch >= 32 && ch <= 127 && i <= N - 1)
+    {
+      s[i++] = ch;
+      printf("*"); //è¾“å‡º'*'
+                   // printf("%c",ch);//è¾“å‡ºå­—ç¬¦
+    }
+    //é€€æ ¼
+    if (ch == 8 && i > 0)
+    {
+      i--;
+      printf("\b \b");
+    }
+    //å›žè½¦
+    if (ch == 13 && i > 0)
+    {
+      s[i] = 0;
+      return s;
+    }
+  }
 }
 
 void main()
 {
-	char *s=lim();
-	printf("%s",s);
+  char *s = lim();
+  printf("%s", s);
 }
-

@@ -1,246 +1,325 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define P 10	//×î´ó½ø³ÌÊı
-#define R 5		//×î´ó×ÊÔ´ÖÖÀà
+#define P 10 //æœ€å¤§è¿›ç¨‹æ•°
+#define R 5  //æœ€å¤§èµ„æºç§ç±»
 
-int p=0;	//Êµ¼Ê½ø³ÌÊı
-int r=0;	//Êµ¼Ê×ÊÔ´ÖÖÀà
-int i,j;	//ÁÙÊ±±äÁ¿
+int p = 0; //å®é™…è¿›ç¨‹æ•°
+int r = 0; //å®é™…èµ„æºç§ç±»
+int i, j;  //ä¸´æ—¶å˜é‡
 
-int max[P][R]={0};			//×î´óĞèÇó
-int allocation[P][R]={0};	//ÒÑ·ÖÅä
-int need[P][R]={0};			//»¹Ğè
-int available[P][R]={0};	//¿ÉÀûÓÃ
-int work[P][R]={0};			//¹¤×÷
-int workAndAllocation[P][R]={0};	//¹¤×÷+¿ÉÀûÓÃ
-int finish[P]={0};			//Íê³ÉË³Ğò
-int resourceMax[R]={0};		//×ÊÔ´×ÜÁ¿
-int resource[R]={0};		//×ÊÔ´µ±Ç°Ê£ÓàÁ¿
-int finishCount=0;			//µ±Ç°ÒÑÍê³É½ø³Ì¸öÊı
+int max[P][R] = {0};               //æœ€å¤§éœ€æ±‚
+int allocation[P][R] = {0};        //å·²åˆ†é…
+int need[P][R] = {0};              //è¿˜éœ€
+int available[P][R] = {0};         //å¯åˆ©ç”¨
+int work[P][R] = {0};              //å·¥ä½œ
+int workAndAllocation[P][R] = {0}; //å·¥ä½œ+å¯åˆ©ç”¨
+int finish[P] = {0};               //å®Œæˆé¡ºåº
+int resourceMax[R] = {0};          //èµ„æºæ€»é‡
+int resource[R] = {0};             //èµ„æºå½“å‰å‰©ä½™é‡
+int finishCount = 0;               //å½“å‰å·²å®Œæˆè¿›ç¨‹ä¸ªæ•°
 
-int openFile(){
-	
-	FILE *fp=fopen("data.txt","r");
-	if(fp==NULL)	//ÎÄ¼ş²»´æÔÚ
-	{
-		fp=fopen("data.txt","w");	//ĞÂ½¨ÎÄ¼ş
-		fprintf(fp,"5 3\n7 5 3 0 1 0\n3 2 2 2 0 0\n9 0 2 3 0 2\n2 2 2 2 1 1\n4 3 3 0 0 2\n10 5 7\n");
-		fclose(fp);
-		printf("ÊäÈë¸ñÊ½£º\nµÚÒ»ĞĞ£º½ø³ÌÊıÁ¿ ×ÊÔ´ÖÖÀà\nµÚ¶şĞĞ£º½ø³Ì0µÄ×î´óĞèÇó¡¢ÒÑ·ÖÅä×ÊÔ´£¬°´ÕÕ×ÊÔ´ÖÖÀàÒÀ´ÎĞ´³ö¡£\nµÚÈıĞĞ£¬½ø³Ì1µÄ...ÒÔ´ËÀàÍÆ¡£×îºóÒ»ĞĞ£º¸÷Àà×ÊÔ´µÄ×ÜÁ¿¡£\nÊ¾ÀıÄÚÈİÒÑĞ´Èë£¬ÇëÖØĞÂĞ´ÈëÊı¾İ£¬±£´æÎÄ¼şºóÔÙ´ÎÔËĞĞ´Ë³ÌĞò¡£\n");
-		system("start data.txt");	//´ò¿ªTXTÎÄ¼ş
-		return 0;
-	}else{	//ÎÄ¼ş´æÔÚ
-		fscanf(fp,"%d %d",&p,&r);	//¶ÁÈ¡Êµ¼Ê½ø³ÌpºÍ×ÊÔ´r
-		for(i=0;i<p;i++){	//µ¼Èë×î´óĞèÇómaxºÍÒÑ·ÖÅäallocation
-			for(j=0;j<r;j++){
-				fscanf(fp,"%d ",&max[i][j]);
-			}
-			for(j=0;j<r;j++){
-				fscanf(fp,"%d ",&allocation[i][j]);
-			}
-		}
-		for(i=0;i<r;i++){	//µ¼Èë×î´ó×ÊÔ´Á¿resourceMax
-			fscanf(fp,"%d ",&resourceMax[i]);
-		}
-		for(i=0;i<p;i++){	//¼ÆËã»¹Ğèneed
-			for(j=0;j<r;j++){
-				need[i][j]=max[i][j]-allocation[i][j];
-			}
-		}
-		for(i=0;i<r;i++){	//¼ÆËã×ÊÔ´µ±Ç°Ê£ÓàÁ¿resource
-			resource[i]=resourceMax[i];
-			for(j=0;j<p;j++){
-				resource[i]-=allocation[j][i];
-			}
-		}
-	}
-	fclose(fp);
-	return 1;
+int openFile()
+{
+
+  FILE *fp = fopen("data.txt", "r");
+  //æ–‡ä»¶ä¸å­˜åœ¨
+  if (fp == NULL)
+  {
+    fp = fopen("data.txt", "w"); //æ–°å»ºæ–‡ä»¶
+    fprintf(fp, "5 3\n7 5 3 0 1 0\n3 2 2 2 0 0\n9 0 2 3 0 2\n2 2 2 2 1 1\n4 3 3 0 0 2\n10 5 7\n");
+    fclose(fp);
+    printf("è¾“å…¥æ ¼å¼ï¼š\nç¬¬ä¸€è¡Œï¼šè¿›ç¨‹æ•°é‡ èµ„æºç§ç±»\nç¬¬äºŒè¡Œï¼šè¿›ç¨‹0çš„æœ€å¤§éœ€æ±‚ã€å·²åˆ†é…èµ„æºï¼ŒæŒ‰ç…§èµ„æºç§ç±»ä¾æ¬¡å†™å‡ºã€‚\nç¬¬ä¸‰è¡Œï¼Œè¿›ç¨‹1çš„...ä»¥æ­¤ç±»æ¨ã€‚æœ€åä¸€è¡Œï¼šå„ç±»èµ„æºçš„æ€»é‡ã€‚\nç¤ºä¾‹å†…å®¹å·²å†™å…¥ï¼Œè¯·é‡æ–°å†™å…¥æ•°æ®ï¼Œä¿å­˜æ–‡ä»¶åå†æ¬¡è¿è¡Œæ­¤ç¨‹åºã€‚\n");
+    system("start data.txt"); //æ‰“å¼€TXTæ–‡ä»¶
+    return 0;
+  }
+  else
+  {                              //æ–‡ä»¶å­˜åœ¨
+    fscanf(fp, "%d %d", &p, &r); //è¯»å–å®é™…è¿›ç¨‹på’Œèµ„æºr
+
+    //å¯¼å…¥æœ€å¤§éœ€æ±‚maxå’Œå·²åˆ†é…allocation
+    for (i = 0; i < p; i++)
+    {
+      for (j = 0; j < r; j++)
+      {
+        fscanf(fp, "%d ", &max[i][j]);
+      }
+      for (j = 0; j < r; j++)
+      {
+        fscanf(fp, "%d ", &allocation[i][j]);
+      }
+    }
+
+    //å¯¼å…¥æœ€å¤§èµ„æºé‡resourceMax
+    for (i = 0; i < r; i++)
+    {
+      fscanf(fp, "%d ", &resourceMax[i]);
+    }
+
+    //è®¡ç®—è¿˜éœ€need
+    for (i = 0; i < p; i++)
+    {
+      for (j = 0; j < r; j++)
+      {
+        need[i][j] = max[i][j] - allocation[i][j];
+      }
+    }
+
+    //è®¡ç®—èµ„æºå½“å‰å‰©ä½™é‡resource
+    for (i = 0; i < r; i++)
+    {
+      resource[i] = resourceMax[i];
+      for (j = 0; j < p; j++)
+      {
+        resource[i] -= allocation[j][i];
+      }
+    }
+  }
+  fclose(fp);
+  return 1;
 }
 
-void showInit(){
-	printf("½ø³Ì×ÜÊı %d ¸ö£¬×ÊÔ´ÀàĞÍ %d ¸ö(×î´óÊıÁ¿Îª ",p,r);
-	for(i=0;i<r;i++){
-		printf("%d ",resourceMax[i]);
-	}
-	printf("£¬Ê£ÓàÊıÁ¿Îª ");
-	for(i=0;i<r;i++){
-		printf("%d ",resource[i]);
-	}
-	printf(")\n\n³õÊ¼×´Ì¬Îª£º\n\n| ½ø³Ì  |  ×î´óĞèÇó  |   ÒÑ·ÖÅä   |    »¹Ğè    |\n");
-	for(i=0;i<p;i++){
-		printf("|  P%-4d|",i);
-		for(j=0;j<r;j++){
-			printf("%3d ",max[i][j]);
-		}
-		printf("|");
-		for(j=0;j<r;j++){
-			printf("%3d ",allocation[i][j]);
-		}
-		printf("|");
-		for(j=0;j<r;j++){
-			printf("%3d ",need[i][j]);
-		}
-		printf("|\n");
-	}
+void showInit()
+{
+  printf("è¿›ç¨‹æ€»æ•° %d ä¸ªï¼Œèµ„æºç±»å‹ %d ä¸ª(æœ€å¤§æ•°é‡ä¸º ", p, r);
+  for (i = 0; i < r; i++)
+  {
+    printf("%d ", resourceMax[i]);
+  }
+  printf("ï¼Œå‰©ä½™æ•°é‡ä¸º ");
+  for (i = 0; i < r; i++)
+  {
+    printf("%d ", resource[i]);
+  }
+  printf(")\n\nåˆå§‹çŠ¶æ€ä¸ºï¼š\n\n| è¿›ç¨‹  |  æœ€å¤§éœ€æ±‚  |   å·²åˆ†é…   |    è¿˜éœ€    |\n");
+  for (i = 0; i < p; i++)
+  {
+    printf("|  P%-4d|", i);
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", max[i][j]);
+    }
+    printf("|");
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", allocation[i][j]);
+    }
+    printf("|");
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", need[i][j]);
+    }
+    printf("|\n");
+  }
 }
 
-void showEnd(){
-	int order[P]={0};	//Ö´ĞĞË³Ğò
-	int temp;			//ÖĞ¼ä±äÁ¿
-	temp=finishCount;	//¼ÇÂ¼Íê³É½ø³ÌÊıÁ¿
-	
-	for(i=0;i<p;i++){	//¼ÆËãÖ´ĞĞË³Ğò
-		for(j=0;j<p;j++){
-			if(finish[j]==i+1){	//ÎŞËÀËø
-				order[i]=j;	//±£´æĞòºÅµ½Í·²¿
-				break;
-			}
-		}
-		if(finish[i]==0){	//ËÀËø
-			order[temp++]=i;	//±£´æĞòºÅµ½Î²²¿
-			for(j=0;j<r;j++){	//ÉèÖÃ¹¤×÷×ÊÔ´workÎªµ±Ç°×ÊÔ´
-				work[i][j]=resource[j];
-			}
-		}
-	}
-	printf("\n¼ÆËã½á¹ûÈçÏÂ£º\n\n");
-	printf("| ½ø³Ì  |  ¹¤×÷×ÊÔ´  |    »¹Ğè    |   ÒÑ·ÖÅä   |   ¿ÉÀûÓÃ   |  Íê³ÉË³Ğò  |\n");
-	for(i=0;i<p;i++){
-		temp=i;
-		i=order[i];
-		if(finish[i]==0){
-			printf("--------------------------------------------------------------------------\n");
-		}
-		printf("|  P%-4d|",i);
-		for(j=0;j<r;j++){
-			printf("%3d ",work[i][j]);
-		}
-		printf("|");
-		for(j=0;j<r;j++){
-			printf("%3d ",need[i][j]);
-		}
-		printf("|");
-		for(j=0;j<r;j++){
-			printf("%3d ",allocation[i][j]);
-		}
-		printf("|");
-		for(j=0;j<r;j++){
-			printf("%3d ",workAndAllocation[i][j]);
-		}
-		printf("|");
-		printf("%7d     ",finish[i]);
-		printf("|\n");
-		i=temp;
-	}
-	if(finishCount==5){
-		printf("\nÎŞËÀËø£¬Ö´ĞĞË³ĞòÎª");
-		for(i=0;i<p;i++){
-			printf("P%d ",order[i]);
-		}
-		printf("\n");
-	}else{
-		printf("\n´æÔÚËÀËø¡£ÆäÖĞÍê³ÉË³ĞòÎª0µÄÎªËÀËø½ø³Ì¡£\n");
-	}
+void showEnd()
+{
+  int order[P] = {0}; //æ‰§è¡Œé¡ºåº
+  int temp;           //ä¸­é—´å˜é‡
+  temp = finishCount; //è®°å½•å®Œæˆè¿›ç¨‹æ•°é‡
+
+  //è®¡ç®—æ‰§è¡Œé¡ºåº
+  for (i = 0; i < p; i++)
+  {
+    for (j = 0; j < p; j++)
+    {
+      if (finish[j] == i + 1)
+      {               //æ— æ­»é”
+        order[i] = j; //ä¿å­˜åºå·åˆ°å¤´éƒ¨
+        break;
+      }
+    }
+    if (finish[i] == 0)
+    {                    //æ­»é”
+      order[temp++] = i; //ä¿å­˜åºå·åˆ°å°¾éƒ¨
+      for (j = 0; j < r; j++)
+      { //è®¾ç½®å·¥ä½œèµ„æºworkä¸ºå½“å‰èµ„æº
+        work[i][j] = resource[j];
+      }
+    }
+  }
+  printf("\nè®¡ç®—ç»“æœå¦‚ä¸‹ï¼š\n\n");
+  printf("| è¿›ç¨‹  |  å·¥ä½œèµ„æº  |    è¿˜éœ€    |   å·²åˆ†é…   |   å¯åˆ©ç”¨   |  å®Œæˆé¡ºåº  |\n");
+  for (i = 0; i < p; i++)
+  {
+    temp = i;
+    i = order[i];
+    if (finish[i] == 0)
+    {
+      printf("--------------------------------------------------------------------------\n");
+    }
+    printf("|  P%-4d|", i);
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", work[i][j]);
+    }
+    printf("|");
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", need[i][j]);
+    }
+    printf("|");
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", allocation[i][j]);
+    }
+    printf("|");
+    for (j = 0; j < r; j++)
+    {
+      printf("%3d ", workAndAllocation[i][j]);
+    }
+    printf("|");
+    printf("%7d     ", finish[i]);
+    printf("|\n");
+    i = temp;
+  }
+  if (finishCount == 5)
+  {
+    printf("\næ— æ­»é”ï¼Œæ‰§è¡Œé¡ºåºä¸º");
+    for (i = 0; i < p; i++)
+    {
+      printf("P%d ", order[i]);
+    }
+    printf("\n");
+  }
+  else
+  {
+    printf("\nå­˜åœ¨æ­»é”ã€‚å…¶ä¸­å®Œæˆé¡ºåºä¸º0çš„ä¸ºæ­»é”è¿›ç¨‹ã€‚\n");
+  }
 }
 
-//µİ¹éÊµÏÖ
-//-1£¬Î´ÕÒµ½
-//ÆäËû£¬ÕÒµ½
-void compute(int find){
-	int flag;
-	if(find==-1){	//Î´ÕÒµ½
-		for(i=0;i<p;i++){
-			if(finish[i]==0){	//Ö»²éÑ¯Î´Íê³ÉµÄ
-				for(j=0;j<r;j++){	//²éÑ¯Ã¿¸ö×ÊÔ´
-					if(need[i][j]>resource[j]){	//ĞèÇó×ÊÔ´´óÓÚÊ£Óà×ÊÔ´£¬È¥³ı
-						flag=0;	//±ê¼Ç²»Âú×ãÌõ¼ş
-						break;	//ÖĞ¶ÏjÑ­»·£¬ÓĞÒ»¸ö×ÊÔ´²»×ã£¬Á¢¼´ÖĞ¶Ï
-					}//r´ÎÅĞ¶Ï¶¼¿ÉÓÃ£¬Ö´ĞĞÏÂÃæÓï¾ä
-					flag=1;	//±ê¼ÇÂú×ãÌõ¼ş
-				}
-				if(flag==1){
-					find=i;		//ÕÒµ½¿ÉÂú×ã½ø³Ì
-					compute(find);	//µİ¹é
-					break;	//ÖĞ¶ÏiÑ­»·£¬Ö»È¡µÚÒ»¸ö½á¹û
-				}
-			}
-		}
-	}else{	//ÕÒµ½
-		i=find;	//Ìæ»»
-		for(j=0;j<r;j++){	//¼ÆËã¹¤×÷work£¬¿ÉÀûÓÃworkAndAllocation£¬×ÊÔ´µ±Ç°Ê£ÓàÁ¿resource
-			work[i][j]=resource[j];
-			workAndAllocation[i][j]=work[i][j]+allocation[i][j];
-			resource[j]=workAndAllocation[i][j];
-		}
-		finish[i]=++finishCount;	//±ê¼ÇÖ´ĞĞË³Ğò£¬´Ó1¿ªÊ¼£¬0ÎªÎ´Ö´ĞĞ
-		compute(-1);	//µİ¹é
-	}
+//é€’å½’å®ç°
+//-1ï¼Œæœªæ‰¾åˆ°
+//å…¶ä»–ï¼Œæ‰¾åˆ°
+void compute(int find)
+{
+  int flag;
+  //æœªæ‰¾åˆ°
+  if (find == -1)
+  {
+    for (i = 0; i < p; i++)
+    {
+      //åªæŸ¥è¯¢æœªå®Œæˆçš„
+      if (finish[i] == 0)
+      {
+        //æŸ¥è¯¢æ¯ä¸ªèµ„æº
+        for (j = 0; j < r; j++)
+        {
+          //éœ€æ±‚èµ„æºå¤§äºå‰©ä½™èµ„æºï¼Œå»é™¤
+          if (need[i][j] > resource[j])
+          {
+            flag = 0; //æ ‡è®°ä¸æ»¡è¶³æ¡ä»¶
+            break;    //ä¸­æ–­jå¾ªç¯ï¼Œæœ‰ä¸€ä¸ªèµ„æºä¸è¶³ï¼Œç«‹å³ä¸­æ–­
+          }           // ræ¬¡åˆ¤æ–­éƒ½å¯ç”¨ï¼Œæ‰§è¡Œä¸‹é¢è¯­å¥
+          flag = 1;   //æ ‡è®°æ»¡è¶³æ¡ä»¶
+        }
+        if (flag == 1)
+        {
+          find = i;      //æ‰¾åˆ°å¯æ»¡è¶³è¿›ç¨‹
+          compute(find); //é€’å½’
+          break;         //ä¸­æ–­iå¾ªç¯ï¼Œåªå–ç¬¬ä¸€ä¸ªç»“æœ
+        }
+      }
+    }
+  }
+  else
+  {           //æ‰¾åˆ°
+    i = find; //æ›¿æ¢
+    //è®¡ç®—å·¥ä½œworkï¼Œå¯åˆ©ç”¨workAndAllocationï¼Œèµ„æºå½“å‰å‰©ä½™é‡resource
+    for (j = 0; j < r; j++)
+    {
+      work[i][j] = resource[j];
+      workAndAllocation[i][j] = work[i][j] + allocation[i][j];
+      resource[j] = workAndAllocation[i][j];
+    }
+    finish[i] = ++finishCount; //æ ‡è®°æ‰§è¡Œé¡ºåºï¼Œä»1å¼€å§‹ï¼Œ0ä¸ºæœªæ‰§è¡Œ
+    compute(-1);               //é€’å½’
+  }
 }
 
-void initFile(){	//³õÊ¼»¯µ¼ÈëÎÄ¼ş
-	finishCount=0;	//³õÊ¼»¯Íê³É¸öÊıfinishCount
-	for(i=0;i<p;i++){	//³õÊ¼»¯Íê³ÉË³Ğòfinish
-		finish[i]=0;
-	}
-	for(i=0;i<r;i++){	//³õÊ¼»¯×ÊÔ´µ±Ç°Ê£ÓàÁ¿resource
-		resource[i]=resourceMax[i];
-		for(j=0;j<p;j++){
-			resource[i]-=allocation[j][i];
-		}
-	}
-	
+//åˆå§‹åŒ–å¯¼å…¥æ–‡ä»¶
+void initFile()
+{
+  finishCount = 0; //åˆå§‹åŒ–å®Œæˆä¸ªæ•°finishCount
+  //åˆå§‹åŒ–å®Œæˆé¡ºåºfinish
+  for (i = 0; i < p; i++)
+  {
+    finish[i] = 0;
+  }
+  //åˆå§‹åŒ–èµ„æºå½“å‰å‰©ä½™é‡resource
+  for (i = 0; i < r; i++)
+  {
+    resource[i] = resourceMax[i];
+    for (j = 0; j < p; j++)
+    {
+      resource[i] -= allocation[j][i];
+    }
+  }
 }
 
-//ÇëÇó×ÊÔ´
-int request(){
-	int pro;	//½ø³Ì
-	int num[R];		//ÊıÁ¿
-	printf("ÇëÊäÈëÒªÉêÇë×ÊÔ´µÄ½ø³Ì£º");
-	scanf("%d",&pro);
-	if(pro>=p){	//½ø³Ì²»´æÔÚ
-		printf("´íÎó£º²»´æÔÚ¸Ã½ø³Ì£¡\n");
-		return -1;
-	}
-	printf("ÇëÊäÈëÉêÇë×ÊÔ´µÄ¸öÊı£º");
-	for(i=0;i<r;i++){
-		scanf("%d",&num[i]);
-	}
-	for(i=0;i<r;i++){	//³¬¶î×ÊÔ´ÉêÇë
-		if(num[i]>need[pro][i]){
-			printf("´íÎó£º³¬¶î×ÊÔ´ÉêÇë£¡\n");
-			return -1;
-		}
-	}
-	for(i=0;i<r;i++){	//Ê£Óà×ÊÔ´²»×ã
-		if(num[i]>resource[i]){
-			printf("´íÎó£ºÊ£Óà×ÊÔ´²»×ã£¡\n");
-			return -1;
-		}
-	}
-	for(i=0;i<r;i++){	//Ìæ»»»¹Ğè×ÊÔ´
-		need[pro][i]=num[i];
-	}
-	return pro;
+//è¯·æ±‚èµ„æº
+int request()
+{
+  int pro;    //è¿›ç¨‹
+  int num[R]; //æ•°é‡
+  printf("è¯·è¾“å…¥è¦ç”³è¯·èµ„æºçš„è¿›ç¨‹ï¼š");
+  scanf("%d", &pro);
+  //è¿›ç¨‹ä¸å­˜åœ¨
+  if (pro >= p)
+  {
+    printf("é”™è¯¯ï¼šä¸å­˜åœ¨è¯¥è¿›ç¨‹ï¼\n");
+    return -1;
+  }
+  printf("è¯·è¾“å…¥ç”³è¯·èµ„æºçš„ä¸ªæ•°ï¼š");
+  for (i = 0; i < r; i++)
+  {
+    scanf("%d", &num[i]);
+  }
+  //è¶…é¢èµ„æºç”³è¯·
+  for (i = 0; i < r; i++)
+  {
+    if (num[i] > need[pro][i])
+    {
+      printf("é”™è¯¯ï¼šè¶…é¢èµ„æºç”³è¯·ï¼\n");
+      return -1;
+    }
+  }
+  //å‰©ä½™èµ„æºä¸è¶³
+  for (i = 0; i < r; i++)
+  {
+    if (num[i] > resource[i])
+    {
+      printf("é”™è¯¯ï¼šå‰©ä½™èµ„æºä¸è¶³ï¼\n");
+      return -1;
+    }
+  }
+  //æ›¿æ¢è¿˜éœ€èµ„æº
+  for (i = 0; i < r; i++)
+  {
+    need[pro][i] = num[i];
+  }
+  return pro;
 }
 
 void main()
 {
-	printf("ÒøĞĞ¼ÒËã·¨\n\n");
-	if(openFile()==1){
-		showInit();
-		printf("--------------------------------------------------------------------------\n");
-		printf("ÅĞ¶Ïµ±Ç°ÏµÍ³ÊÇ·ñËÀËø\n");
-		compute(-1);
-		showEnd();
-		printf("--------------------------------------------------------------------------\n");
-		printf("ÅĞ¶Ï½ø³ÌÉêÇë×ÊÔ´ºóÊÇ·ñËÀËø\n");
-		initFile();
-		int progress=request();
-		if(progress!=-1){
-			compute(progress);
-			showEnd();
-		}
-	}
+  printf("é“¶è¡Œå®¶ç®—æ³•\n\n");
+  if (openFile() == 1)
+  {
+    showInit();
+    printf("--------------------------------------------------------------------------\n");
+    printf("åˆ¤æ–­å½“å‰ç³»ç»Ÿæ˜¯å¦æ­»é”\n");
+    compute(-1);
+    showEnd();
+    printf("--------------------------------------------------------------------------\n");
+    printf("åˆ¤æ–­è¿›ç¨‹ç”³è¯·èµ„æºåæ˜¯å¦æ­»é”\n");
+    initFile();
+    int progress = request();
+    if (progress != -1)
+    {
+      compute(progress);
+      showEnd();
+    }
+  }
 }

@@ -1,72 +1,85 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-//ÉùÃ÷
-void rand(int a[52],int b[52]);//·ÖÅÆÆ÷
-void print(int a[],int b[],int c[]);//Êä³ö
-int count(int j[]);//¼ÆÊıÆ÷
+//å£°æ˜
+void rand(int a[52], int b[52]);       //åˆ†ç‰Œå™¨
+void print(int a[], int b[], int c[]); //è¾“å‡º
+int count(int j[]);                    //è®¡æ•°å™¨
 
-void rand(int a[52],int b[52])//·ÖÅÆÆ÷
-{	//z[]Ã¿Ò»¸öÊı×ÖµÄ¸öÊı,a[]Ò»ºÅÅÆ,b[]¶şºÅÅÆ,n×ÜÅÆ
-	int z[14]={0},n=0,i,x;
-	for (i=0;n<52;i++)
-	{
-		x=rand()%13+1;  //²úÉú[1,13]µÄËæ»úÊı
-		{
-			if(z[x]<4)
-			{
-				z[x]++;n++;
-				if(n<27) a[n-1]=x;
-				else b[n-27]=x;
-			}
-		}
-	}
+//åˆ†ç‰Œå™¨
+void rand(int a[52], int b[52])
+{ // z[]æ¯ä¸€ä¸ªæ•°å­—çš„ä¸ªæ•°,a[]ä¸€å·ç‰Œ,b[]äºŒå·ç‰Œ,næ€»ç‰Œ
+  int z[14] = {0}, n = 0, i, x;
+  for (i = 0; n < 52; i++)
+  {
+    x = rand() % 13 + 1; //äº§ç”Ÿ[1,13]çš„éšæœºæ•°
+    {
+      if (z[x] < 4)
+      {
+        z[x]++;
+        n++;
+        if (n < 27)
+          a[n - 1] = x;
+        else
+          b[n - 27] = x;
+      }
+    }
+  }
 }
 
-int count(int j[])//¼ÆÊıÆ÷
+//è®¡æ•°å™¨
+int count(int j[])
 {
-	for(int i=0;i<52;i++)
-		if(j[i]==0) return i;
+  for (int i = 0; i < 52; i++)
+    if (j[i] == 0)
+      return i;
 }
 
-void print(int a[],int b[],int c[])//Êä³ö
+//è¾“å‡º
+void print(int a[], int b[], int c[])
 {
-	int i;
-	printf("×À  ÅÆ£º¹²%dÕÅ\n",count(c));//×ÀÅÆ
-	for(i=0;i<14;i++)
-	{
-		if(c[i]!=0)
-		{
-		if((i+1)%10==0)printf("%-4d\n",c[i]);
-		else printf("%-4d",c[i]);
-		}
-	}
-	printf("\nÍæ¼ÒÒ»£º¹²%dÕÅ\n",count(a));//Íæ¼ÒÒ»
-	for(i=0;i<52;i++)
-	{
-		if(a[i]!=0)
-		{
-		if((i+1)%10==0)printf("%-4d\n",a[i]);
-		else printf("%-4d",a[i]);
-		}
-	}
-	printf("\nÍæ¼Ò¶ş£º¹²%dÕÅ\n",count(b));//Íæ¼Ò¶ş
-	for(i=0;i<52;i++)
-	{
-		if(b[i]!=0)
-		{
-		if((i+1)%10==0)printf("%-4d\n",b[i]);
-		else printf("%-4d",b[i]);
-		}
-	}
-	printf("\n");
+  int i;
+  printf("æ¡Œ  ç‰Œï¼šå…±%då¼ \n", count(c)); //æ¡Œç‰Œ
+  for (i = 0; i < 14; i++)
+  {
+    if (c[i] != 0)
+    {
+      if ((i + 1) % 10 == 0)
+        printf("%-4d\n", c[i]);
+      else
+        printf("%-4d", c[i]);
+    }
+  }
+  printf("\nç©å®¶ä¸€ï¼šå…±%då¼ \n", count(a)); //ç©å®¶ä¸€
+  for (i = 0; i < 52; i++)
+  {
+    if (a[i] != 0)
+    {
+      if ((i + 1) % 10 == 0)
+        printf("%-4d\n", a[i]);
+      else
+        printf("%-4d", a[i]);
+    }
+  }
+  printf("\nç©å®¶äºŒï¼šå…±%då¼ \n", count(b)); //ç©å®¶äºŒ
+  for (i = 0; i < 52; i++)
+  {
+    if (b[i] != 0)
+    {
+      if ((i + 1) % 10 == 0)
+        printf("%-4d\n", b[i]);
+      else
+        printf("%-4d", b[i]);
+    }
+  }
+  printf("\n");
 }
 
 void main()
 {
-	int a[52]={0},b[52]={0},c[14]={0};//a[]Ò»ºÅÅÆ,b[]¶şºÅÅÆ,c[]×ÀÅÆ
-	srand((unsigned)time(NULL)); //ÓÃÊ±¼ä×öÖÖ×Ó£¬Ã¿´Î²úÉúËæ»úÊı²»Ò»Ñù
-	rand(a,b);
-	print(a,b,c);
+  int a[52] = {0}, b[52] = {0}, c[14] = {0}; // a[]ä¸€å·ç‰Œ,b[]äºŒå·ç‰Œ,c[]æ¡Œç‰Œ
+  srand((unsigned)time(NULL));               //ç”¨æ—¶é—´åšç§å­ï¼Œæ¯æ¬¡äº§ç”Ÿéšæœºæ•°ä¸ä¸€æ ·
+  rand(a, b);
+  print(a, b, c);
 }

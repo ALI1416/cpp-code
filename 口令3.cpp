@@ -1,99 +1,102 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<conio.h>
-#include<windows.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
+#include <string.h>
 #define N 16
 
-void gotoxy(int x,int y)
+void gotoxy(int x, int y)
 {
-	HANDLE app;
-	COORD  pos;
-	pos.X=x;
-	pos.Y=y;
-	app=GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(app,pos);
+  HANDLE app;
+  COORD pos;
+  pos.X = x;
+  pos.Y = y;
+  app = GetStdHandle(STD_OUTPUT_HANDLE);
+  SetConsoleCursorPosition(app, pos);
 }
-//printf("¨€¡¡¨‡¨Š¨x¨‰");
+// printf("â–ˆã€€â–â–•â–â–”");
 
 char *lim()
 {
-	int i=0;
-	char ch;
-	char *s=(char *)malloc(sizeof(char)*N);
-	while(1)
-	{
-		ch=getch();
-		if(ch>=33&&ch<=127&&i<=N-1)//ÓĞĞ§ÊäÈë×Ö·û
-		{
-			s[i++]=ch;
-			printf("*");//Êä³ö'*'
-			//printf("%c",ch);//Êä³ö×Ö·û
-		}
-		if(ch==32)//¿Õ¸ñÍË³ö
-			exit(0);
-		if(ch==8&&i>0)//ÍË¸ñ
-		{
-			i--;
-			printf("\b \b");
-		}
-		if(ch==13&&i>0)//»Ø³µ
-		{
-			s[i]=0;
-			return s;
-		}
-	}
+  int i = 0;
+  char ch;
+  char *s = (char *)malloc(sizeof(char) * N);
+  while (1)
+  {
+    ch = getch();
+    //æœ‰æ•ˆè¾“å…¥å­—ç¬¦
+    if (ch >= 33 && ch <= 127 && i <= N - 1)
+    {
+      s[i++] = ch;
+      printf("*"); //è¾“å‡º'*'
+                   // printf("%c",ch);//è¾“å‡ºå­—ç¬¦
+    }
+    //ç©ºæ ¼é€€å‡º
+    if (ch == 32)
+      exit(0);
+    //é€€æ ¼
+    if (ch == 8 && i > 0)
+    {
+      i--;
+      printf("\b \b");
+    }
+    //å›è½¦
+    if (ch == 13 && i > 0)
+    {
+      s[i] = 0;
+      return s;
+    }
+  }
 }
 
 int pass(char *pw)
 {
-	printf("\n\n\n");
-	printf("\t\t\t\t¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€\n");
-	printf("\t\t\t\t¨‡                        ¨Š\n");
-	printf("\t\t\t\t¨‡       ÇëÊäÈë¿ÚÁî       ¨Š\n");
-	printf("\t\t\t\t¨‡    ¨x¨x¨x¨x¨x¨x¨x¨x    ¨Š\n");
-	printf("\t\t\t\t¨‡  ¨Š                ¨‡  ¨Š\n");
-	printf("\t\t\t\t¨‡    ¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰    ¨Š\n");
-	printf("\t\t\t\t¨‡[»Ø³µ]È·ÈÏ    [¿Õ¸ñ]¹Ø±Õ¨Š\n");
-	printf("\t\t\t\t¨‡                        ¨Š\n");
-	printf("\t\t\t\t¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰¨‰\n");
-	gotoxy(38,7);
-	int count=3;
-	while(count)
-	{
-		char *get=lim();
-		if(strcmp(get,pw)==0)
-		{
-			gotoxy(33,10);
-			printf("¿ÚÁîÕıÈ·£¡ÕıÔÚ½øÈëÏµÍ³...");
-			getch();
-			//delay();
-			return 1;//ÕıÈ·
-		}
-		else
-		{
-			if(count!=1)
-			{
-				gotoxy(33,10);
-				printf("¿ÚÁî´íÎó£¡Ê£Óà³¢ÊÔ´ÎÊı%d´Î",--count);
-				gotoxy(38,7);
-				printf("\t\t");
-				gotoxy(38,7);
-			}
-			else
-			{
-			gotoxy(33,10);
-				printf("¿ÚÁî´íÎó£¡°´ÈÎÒâ¼üÍË³ö¡£");
-				getch();
-				return 0;//´íÎó
-			}
-		}
-	}
-	return 0;
+  printf("\n\n\n");
+  printf("\t\t\t\tâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ\n");
+  printf("\t\t\t\tâ–                        â–•\n");
+  printf("\t\t\t\tâ–       è¯·è¾“å…¥å£ä»¤       â–•\n");
+  printf("\t\t\t\tâ–    â–â–â–â–â–â–â–â–    â–•\n");
+  printf("\t\t\t\tâ–  â–•                â–  â–•\n");
+  printf("\t\t\t\tâ–    â–”â–”â–”â–”â–”â–”â–”â–”    â–•\n");
+  printf("\t\t\t\tâ–[å›è½¦]ç¡®è®¤    [ç©ºæ ¼]å…³é—­â–•\n");
+  printf("\t\t\t\tâ–                        â–•\n");
+  printf("\t\t\t\tâ–”â–”â–”â–”â–”â–”â–”â–”â–”â–”â–”â–”â–”â–”\n");
+  gotoxy(38, 7);
+  int count = 3;
+  while (count)
+  {
+    char *get = lim();
+    if (strcmp(get, pw) == 0)
+    {
+      gotoxy(33, 10);
+      printf("å£ä»¤æ­£ç¡®ï¼æ­£åœ¨è¿›å…¥ç³»ç»Ÿ...");
+      getch();
+      // delay();
+      return 1; //æ­£ç¡®
+    }
+    else
+    {
+      if (count != 1)
+      {
+        gotoxy(33, 10);
+        printf("å£ä»¤é”™è¯¯ï¼å‰©ä½™å°è¯•æ¬¡æ•°%dæ¬¡", --count);
+        gotoxy(38, 7);
+        printf("\t\t");
+        gotoxy(38, 7);
+      }
+      else
+      {
+        gotoxy(33, 10);
+        printf("å£ä»¤é”™è¯¯ï¼æŒ‰ä»»æ„é”®é€€å‡ºã€‚");
+        getch();
+        return 0; //é”™è¯¯
+      }
+    }
+  }
+  return 0;
 }
 
 void main()
 {
-	pass("123");
-	
+  pass("123");
 }

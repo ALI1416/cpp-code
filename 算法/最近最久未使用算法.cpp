@@ -1,142 +1,190 @@
-#include<stdio.h>
-#define N 100	//½ø³Ì×î´óÊıÁ¿
-#define M 10	//ÎïÀí¿é×î´óÊıÁ¿
+#include <stdio.h>
 
-int n=20;	//Êµ¼Ê½ø³ÌÊıÁ¿
-int m=3;	//Êµ¼ÊÎïÀí¿éÊıÁ¿
-int page[N]={7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1};	//Ò³ÃæºÅ
-int miss[N];	//ÊÇ·ñÈ±Ò³
-int map[N][M];	//ÖÃ»»Í¼
-int i,j,k;	//¾Ö²¿±äÁ¿
+#define N 100 //è¿›ç¨‹æœ€å¤§æ•°é‡
+#define M 10  //ç‰©ç†å—æœ€å¤§æ•°é‡
 
-void scan(){
-	printf("ÇëÊäÈëÎïÀí¿éÊıÁ¿ ");
-	scanf("%d",&m);
-	printf("ÇëÊäÈë½ø³ÌÒ³ÃæºÅ£¬-1½áÊøÊäÈë\n");
-	for(i=0;i<N;i++){
-		scanf("%d",&k);
-		if(k!=-1){
-			page[i]=k;
-		}else{
-			n=i;
-			break;
-		}
-	}
+int n = 20;                                                                 //å®é™…è¿›ç¨‹æ•°é‡
+int m = 3;                                                                  //å®é™…ç‰©ç†å—æ•°é‡
+int page[N] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1}; //é¡µé¢å·
+int miss[N];                                                                //æ˜¯å¦ç¼ºé¡µ
+int map[N][M];                                                              //ç½®æ¢å›¾
+int i, j, k;                                                                //å±€éƒ¨å˜é‡
+
+void scan()
+{
+  printf("è¯·è¾“å…¥ç‰©ç†å—æ•°é‡ ");
+  scanf("%d", &m);
+  printf("è¯·è¾“å…¥è¿›ç¨‹é¡µé¢å·ï¼Œ-1ç»“æŸè¾“å…¥\n");
+  for (i = 0; i < N; i++)
+  {
+    scanf("%d", &k);
+    if (k != -1)
+    {
+      page[i] = k;
+    }
+    else
+    {
+      n = i;
+      break;
+    }
+  }
 }
 
-void init(){
-	for(i=0;i<n;i++){	//³õÊ¼»¯map
-		for(j=0;j<m;j++){
-			map[i][j]=-1;
-		}
-	}
-	for(i=0;i<n;i++){	//³õÊ¼»¯miss
-		miss[i]=0;
-	}
+void init()
+{
+  //åˆå§‹åŒ–map
+  for (i = 0; i < n; i++)
+  {
+    for (j = 0; j < m; j++)
+    {
+      map[i][j] = -1;
+    }
+  }
+  //åˆå§‹åŒ–miss
+  for (i = 0; i < n; i++)
+  {
+    miss[i] = 0;
+  }
 }
 
-void input(int x,int i,int j,int num_v){
-	//x=0 fifoËã·¨ ÊäÈëi,num_v (¶ÓÊ×³ö¶Ó,num_vÈë¶Ó)
-	//x=1  lruËã·¨ ÊäÈëi,j (ĞòºÅj³ö¶Ó£¬map[i][j]Èë¶Ó)
-	int num;
-	for(k=0;k<m;k++){	//¼ÆËãÒÑÊ¹ÓÃµÄÎïÀí¿éÊıÁ¿
-		if(map[i][k]==-1){
-			num=k-1;
-			break;
-		}else{
-			num=m-1;
-		}
-	}
-	if(x==0){	//fifo
-		for(k=0;k<num;k++){	//Ìæ»»
-			map[i][k]=map[i][k+1];
-		}
-	}else{	//lru
-		num_v=map[i][j];	//±£´æ¸ÃÒ³ÃæºÅ
-		for(k=j;k<num;k++){	//Ìæ»»
-			map[i][k]=map[i][k+1];
-		}
-	}
-	map[i][num]=num_v;	//°Ñ¸ÃÒ³ÃæºÅ·Åµ½¶ÓÎ²
+void input(int x, int i, int j, int num_v)
+{
+  // x=0 fifoç®—æ³• è¾“å…¥i,num_v (é˜Ÿé¦–å‡ºé˜Ÿ,num_vå…¥é˜Ÿ)
+  // x=1  lruç®—æ³• è¾“å…¥i,j (åºå·jå‡ºé˜Ÿï¼Œmap[i][j]å…¥é˜Ÿ)
+  int num;
+  //è®¡ç®—å·²ä½¿ç”¨çš„ç‰©ç†å—æ•°é‡
+  for (k = 0; k < m; k++)
+  {
+    if (map[i][k] == -1)
+    {
+      num = k - 1;
+      break;
+    }
+    else
+    {
+      num = m - 1;
+    }
+  }
+  // fifo
+  if (x == 0)
+  {
+    //æ›¿æ¢
+    for (k = 0; k < num; k++)
+    {
+      map[i][k] = map[i][k + 1];
+    }
+  }
+  else
+  {                    // lru
+    num_v = map[i][j]; //ä¿å­˜è¯¥é¡µé¢å·
+    for (k = j; k < num; k++)
+    { //æ›¿æ¢
+      map[i][k] = map[i][k + 1];
+    }
+  }
+  map[i][num] = num_v; //æŠŠè¯¥é¡µé¢å·æ”¾åˆ°é˜Ÿå°¾
 }
 
-void fifo_lru(int x){
-	//x=0 fifo
-	//x=1 lru
-	int find,num,num_v;
-	for(i=0;i<n;i++){
-		find=0;
-		for(j=0;j<m;j++){	//µÚÒ»±é Ñ°ÕÒ´æÔÚµÄÒ³ÃæºÅ
-			if(map[i][j]==-1){	//²éÕÒµ½¿ÕÏĞÎïÀí¿é ½áÊø²éÕÒ
-				break;
-			}
-			if(map[i][j]==page[i]){	//ÕÒµ½ÏàÍ¬ÎïÀí¿é
-				find=1;	
-				if(x==1)	//Èç¹ûÎªlruËã·¨
-					input(1,i,j,0);
-				break;
-			}
-		}
-		if(find==0){
-			for(j=0;j<m;j++){	//µÚ¶ş±é Ñ°ÕÒ¿ÕÏĞÎïÀí¿é
-				if(map[i][j]==-1){
-					map[i][j]=page[i];	//ÕÒµ½
-					find=1;
-					miss[i]=1;	//±ê¼ÇÎªÈ±Ò³
-					break;
-				}
-			}
-			if(find==0){
-				input(0,i,0,page[i]);	//fifo&lru
-				miss[i]=1;	//±ê¼ÇÎªÈ±Ò³
-			}
-		}
-		for(j=0;j<m;j++){	//¸´ÖÆµ±Ç°Ò³ÃæºÅmapµ½ÏÂÒ»¸ö
-			map[i+1][j]=map[i][j];
-		}
-	}
+void fifo_lru(int x)
+{
+  // x=0 fifo
+  // x=1 lru
+  int find, num, num_v;
+  for (i = 0; i < n; i++)
+  {
+    find = 0;
+    //ç¬¬ä¸€é å¯»æ‰¾å­˜åœ¨çš„é¡µé¢å·
+    for (j = 0; j < m; j++)
+    {
+      //æŸ¥æ‰¾åˆ°ç©ºé—²ç‰©ç†å— ç»“æŸæŸ¥æ‰¾
+      if (map[i][j] == -1)
+      {
+        break;
+      }
+      //æ‰¾åˆ°ç›¸åŒç‰©ç†å—
+      if (map[i][j] == page[i])
+      {
+        find = 1;
+        //å¦‚æœä¸ºlruç®—æ³•
+        if (x == 1)
+          input(1, i, j, 0);
+        break;
+      }
+    }
+    if (find == 0)
+    {
+      //ç¬¬äºŒé å¯»æ‰¾ç©ºé—²ç‰©ç†å—
+      for (j = 0; j < m; j++)
+      {
+        if (map[i][j] == -1)
+        {
+          map[i][j] = page[i]; //æ‰¾åˆ°
+          find = 1;
+          miss[i] = 1; //æ ‡è®°ä¸ºç¼ºé¡µ
+          break;
+        }
+      }
+      if (find == 0)
+      {
+        input(0, i, 0, page[i]); // fifo&lru
+        miss[i] = 1;             //æ ‡è®°ä¸ºç¼ºé¡µ
+      }
+    }
+    //å¤åˆ¶å½“å‰é¡µé¢å·mapåˆ°ä¸‹ä¸€ä¸ª
+    for (j = 0; j < m; j++)
+    {
+      map[i + 1][j] = map[i][j];
+    }
+  }
 }
 
-void print(){
-	int miss_num=0;
-	printf("½ø³ÌÒ³ÃæºÅÎª£º\n");
-	for(i=0;i<n;i++){
-		printf("%4d",page[i]);
-	}
-	printf("\nÖÃ»»Í¼Îª£º\n");
-	for(i=0;i<m;i++){
-		for(j=0;j<n;j++){
-			printf("%4d",map[j][i]);
-		}
-		printf("\n");
-	}
-	for(i=0;i<n;i++){
-		if(miss[i]==1){
-			miss_num++;
-			printf("  È±");
-		}
-		else
-			printf("    ");
-	}
-	printf("\n");
-	printf("È±Ò³ %d ´Î£¬È±Ò³ÂÊ %.2f %%\n",miss_num,miss_num/(float)n*100);
+void print()
+{
+  int miss_num = 0;
+  printf("è¿›ç¨‹é¡µé¢å·ä¸ºï¼š\n");
+  for (i = 0; i < n; i++)
+  {
+    printf("%4d", page[i]);
+  }
+  printf("\nç½®æ¢å›¾ä¸ºï¼š\n");
+  for (i = 0; i < m; i++)
+  {
+    for (j = 0; j < n; j++)
+    {
+      printf("%4d", map[j][i]);
+    }
+    printf("\n");
+  }
+  for (i = 0; i < n; i++)
+  {
+    if (miss[i] == 1)
+    {
+      miss_num++;
+      printf("  ç¼º");
+    }
+    else
+      printf("    ");
+  }
+  printf("\n");
+  printf("ç¼ºé¡µ %d æ¬¡ï¼Œç¼ºé¡µç‡ %.2f %%\n", miss_num, miss_num / (float)n * 100);
 }
 
-void main(){
-	int def;
-	printf("ÊäÈë0Ê¹ÓÃÄ¬ÈÏÊı¾İ£¬ÊäÈë1ÊÖ¶¯ÊäÈëÊı¾İ");
-	scanf("%d",&def);
-	if(def!=0)
-		scan();
+void main()
+{
+  int def;
+  printf("è¾“å…¥0ä½¿ç”¨é»˜è®¤æ•°æ®ï¼Œè¾“å…¥1æ‰‹åŠ¨è¾“å…¥æ•°æ®");
+  scanf("%d", &def);
+  if (def != 0)
+    scan();
 
-	printf("×Ü¹² %d ¸ö½ø³Ì£¬ÓĞ %d ¸öÎïÀí¿é\n",n,m);
-	printf("\nÏÈÀ´ÏÈ·şÎñËã·¨(FIFO)\n");
-	init();
-	fifo_lru(0);
-	print();
+  printf("æ€»å…± %d ä¸ªè¿›ç¨‹ï¼Œæœ‰ %d ä¸ªç‰©ç†å—\n", n, m);
+  printf("\nå…ˆæ¥å…ˆæœåŠ¡ç®—æ³•(FIFO)\n");
+  init();
+  fifo_lru(0);
+  print();
 
-	printf("\n×î½ü×î¾ÃÎ´Ê¹ÓÃËã·¨(LRU)\n");
-	init();
-	fifo_lru(1);
-	print();
+  printf("\næœ€è¿‘æœ€ä¹…æœªä½¿ç”¨ç®—æ³•(LRU)\n");
+  init();
+  fifo_lru(1);
+  print();
 }

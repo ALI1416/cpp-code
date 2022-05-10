@@ -1,238 +1,396 @@
-//////////////////////////////////////////////////////
-//          Ãû³Æ£º   ³éÇ©Æ÷v3.0						//
-//          ÓïÑÔ£º   CÓïÑÔ							//
-//		ÉÏÒ»°æ±¾£º   ³éÇ©Æ÷v2.0						//
-//		Ôö¼Ó¹¦ÄÜ£º   Ôö´óÏÔÊ¾Êı×Ö×ÖÌå				//
-//          »·¾³£º   Microsoft Visual C++ 6.0		//
-//          ×÷Õß£º   °¢Àê141						//
-//          ÈÕÆÚ£º   2017Äê5ÔÂ27ÈÕ					//
-//////////////////////////////////////////////////////
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<string.h>
-#include<math.h>
-#include<conio.h>
-#include<windows.h>
+//////////////////////////////////////////////////
+//        åç§°ï¼š    æŠ½ç­¾å™¨v3.0
+//        è¯­è¨€ï¼š    Cè¯­è¨€
+//    ä¸Šä¸€ç‰ˆæœ¬ï¼š    æŠ½ç­¾å™¨v2.0
+//    å¢åŠ åŠŸèƒ½ï¼š    å¢å¤§æ˜¾ç¤ºæ•°å­—å­—ä½“
+//        ç¯å¢ƒï¼š    Microsoft Visual C++ 6.0
+//        ä½œè€…ï¼š    ALI1416
+//        æ—¥æœŸï¼š    2017å¹´5æœˆ27æ—¥
+//////////////////////////////////////////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <math.h>
+#include <conio.h>
+#include <windows.h>
 
 void rand(int x);
 int scan();
-void gotoxy(int x,int y);
+void gotoxy(int x, int y);
 void dot_num(int x);
 
 void main()
 {
-	system("mode con cols=96 lines=32");//³õÊ¼»¯´°¿Ú´óĞ¡
-	system("color 07");//³õÊ¼»¯±³¾°¡¢ÎÄ×ÖÑÕÉ«
-	SetConsoleTitle("³éÇ©Æ÷"); //³õÊ¼»¯´°¿Ú±êÌâ
-	srand((unsigned)time(NULL));
-	printf("\t\t\t\t**************************\n");
-	printf("\t\t\t\t******»¶Ó­Ê¹ÓÃ³éÇ©Æ÷******\n");
-	printf("\t\t\t\t**************************\n\n");
-	printf("\t\t\t\t---------Ê¹ÓÃ·½·¨---------\n");	
-	printf("\t\t\t\t--°´»Ø³µ³éÇ©£¬°´ÆäËûÍË³ö--\n\n");
-	printf("\t\t\t\t\t\t\t\t¹ØÓÚ£º³éÇ©Æ÷v3.0\n");
-	printf("\t\t\t\t\t\t\t\t×÷Õß£º°¢Àê141\n");
-	printf("\t\t\t\t\t\t\t\tÈÕÆÚ£º2017Äê5ÔÂ27ÈÕ\n");
-	rand(scan());
+  system("mode con cols=96 lines=32"); //åˆå§‹åŒ–çª—å£å¤§å°
+  system("color 07");                  //åˆå§‹åŒ–èƒŒæ™¯ã€æ–‡å­—é¢œè‰²
+  SetConsoleTitle("æŠ½ç­¾å™¨");           //åˆå§‹åŒ–çª—å£æ ‡é¢˜
+  srand((unsigned)time(NULL));
+  printf("\t\t\t\t**************************\n");
+  printf("\t\t\t\t******æ¬¢è¿ä½¿ç”¨æŠ½ç­¾å™¨******\n");
+  printf("\t\t\t\t**************************\n\n");
+  printf("\t\t\t\t---------ä½¿ç”¨æ–¹æ³•---------\n");
+  printf("\t\t\t\t--æŒ‰å›è½¦æŠ½ç­¾ï¼ŒæŒ‰å…¶ä»–é€€å‡º--\n\n");
+  printf("\t\t\t\t\t\t\t\tå…³äºï¼šæŠ½ç­¾å™¨v3.0\n");
+  printf("\t\t\t\t\t\t\t\tä½œè€…ï¼šé˜¿ç‹¸141\n");
+  printf("\t\t\t\t\t\t\t\tæ—¥æœŸï¼š2017å¹´5æœˆ27æ—¥\n");
+  rand(scan());
 }
 
-void gotoxy(int x,int y)//¸Ä±ä¹â±êÎ»ÖÃ
+//æ”¹å˜å…‰æ ‡ä½ç½®
+void gotoxy(int x, int y)
 {
-	HANDLE app;
-	COORD  pos;
-	pos.X=x;
-	pos.Y=y;
-	app=GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(app,pos);
+  HANDLE app;
+  COORD pos;
+  pos.X = x;
+  pos.Y = y;
+  app = GetStdHandle(STD_OUTPUT_HANDLE);
+  SetConsoleCursorPosition(app, pos);
 }
 
-int scan()//ÊäÈë×Ö·û´®£¬²¢¼ì²éÊäÈëÊÇ·ñºÏ·¨
+//è¾“å…¥å­—ç¬¦ä¸²ï¼Œå¹¶æ£€æŸ¥è¾“å…¥æ˜¯å¦åˆæ³•
+int scan()
 {
-	while(1)
-	{
-		char s[20];
-		int i,err=0,length=0,x;
-		printf("\nÇëÊäÈëÑ§ÉúÊıÁ¿");
-		gets(s);
-		length=strlen(s);
-		for(i=0;i<length;i++)
-			if(s[i]<'0'||s[i]>'9') 
-			{err=1;break;}
-			x=atoi(s);
-			if(x!=0&&err==0){return x; break;}
-			else {printf("\nÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë\n");continue;}
-	}
+  while (1)
+  {
+    char s[20];
+    int i, err = 0, length = 0, x;
+    printf("\nè¯·è¾“å…¥å­¦ç”Ÿæ•°é‡");
+    gets(s);
+    length = strlen(s);
+    for (i = 0; i < length; i++)
+      if (s[i] < '0' || s[i] > '9')
+      {
+        err = 1;
+        break;
+      }
+    x = atoi(s);
+    if (x != 0 && err == 0)
+    {
+      return x;
+      break;
+    }
+    else
+    {
+      printf("\nè¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
+      continue;
+    }
+  }
 }
 
-void rand(int x)//Ëæ»úÊı
+//éšæœºæ•°
+void rand(int x)
 {
-	while(1)
-	{
-		int t;
-		t=rand()%x+1;
-		system("cls");
-		printf("³éÈ¡×ÜÈËÊıÎª£º%d\n",x);
-		printf("³éÈ¡µÄÑ§ºÅÎª£º%d\n",t);
-		printf("°´»Ø³µ¼ü¼ÌĞø³éÇ©\n");
-		printf("°´ÆäËû¼üÍË³ö\n");
-		dot_num(t);
-		if(getch()==13) continue;
-		else break;
-	}
+  while (1)
+  {
+    int t;
+    t = rand() % x + 1;
+    system("cls");
+    printf("æŠ½å–æ€»äººæ•°ä¸ºï¼š%d\n", x);
+    printf("æŠ½å–çš„å­¦å·ä¸ºï¼š%d\n", t);
+    printf("æŒ‰å›è½¦é”®ç»§ç»­æŠ½ç­¾\n");
+    printf("æŒ‰å…¶ä»–é”®é€€å‡º\n");
+    dot_num(t);
+    if (getch() == 13)
+      continue;
+    else
+      break;
+  }
 }
 
-void dot_num(int x)//´òÓ¡µãÕóÊı×Ö
+//æ‰“å°ç‚¹é˜µæ•°å­—
+void dot_num(int x)
 {
-	int i=0,j=10,len=0;
-	char s[10];
-	itoa(x,s,10);
-	len=strlen(s);
-	i=(96-len*16)/2;
-	for(int k=0,int t=0;k<len;k++,t++)
-	{
-		switch(s[k])
-		{
-		case '0':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("    ¡ö¡ö¡ö¡ö¡ö  ");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö        ¡ö");
-			gotoxy(i,j++);printf("  ¡ö  ¡ö      ¡ö");
-			gotoxy(i,j++);printf("  ¡ö    ¡ö    ¡ö");
-			gotoxy(i,j++);printf("  ¡ö      ¡ö  ¡ö");
-			gotoxy(i,j++);printf("  ¡ö        ¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("    ¡ö¡ö¡ö¡ö¡ö  ");
-			i+=16;j=10;break;
-		case '1':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("      ¡ö¡ö      ");
-			gotoxy(i,j++);printf("    ¡ö  ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("        ¡ö      ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '2':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '3':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '4':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			i+=16;j=10;break;
-		case '5':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '6':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö            ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '7':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			i+=16;j=10;break;
-		case '8':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		case '9':
-			gotoxy(i,j++);printf("                ");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö          ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("              ¡ö");
-			gotoxy(i,j++);printf("  ¡ö¡ö¡ö¡ö¡ö¡ö¡ö");
-			i+=16;j=10;break;
-		}
-	}
+  int i = 0, j = 10, len = 0;
+  char s[10];
+  itoa(x, s, 10);
+  len = strlen(s);
+  i = (96 - len * 16) / 2;
+  for (int k = 0, int t = 0; k < len; k++, t++)
+  {
+    switch (s[k])
+    {
+    case '0':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("    â– â– â– â– â–   ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â–         â– ");
+      gotoxy(i, j++);
+      printf("  â–   â–       â– ");
+      gotoxy(i, j++);
+      printf("  â–     â–     â– ");
+      gotoxy(i, j++);
+      printf("  â–       â–   â– ");
+      gotoxy(i, j++);
+      printf("  â–         â– â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("    â– â– â– â– â–   ");
+      i += 16;
+      j = 10;
+      break;
+    case '1':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("      â– â–       ");
+      gotoxy(i, j++);
+      printf("    â–   â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("        â–       ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '2':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '3':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '4':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '5':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '6':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â–             ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '7':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '8':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    case '9':
+      gotoxy(i, j++);
+      printf("                ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â–           â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("              â– ");
+      gotoxy(i, j++);
+      printf("  â– â– â– â– â– â– â– ");
+      i += 16;
+      j = 10;
+      break;
+    }
+  }
 }

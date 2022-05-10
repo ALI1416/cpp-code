@@ -1,35 +1,36 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<conio.h>
-#include<windows.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
+#include <string.h>
 
 void main()
 {
-	printf("»¶Ó­Ê¹ÓÃÑ§Éú¹ÜÀíÏµÍ³\n");
-	printf("ÇëÊäÈë¿ÚÁî£¡\n");
-	char get[10],pw[]="123";//ÃÜÂë
-	int count=3;
-	while(count)
-	{
-		gets(get);
-		if(strcmp(get,pw)==0)
-		{
-			printf("¿ÚÁîÕıÈ·£¡ÕıÔÚ½øÈëÏµÍ³...\n");
-			Sleep(500);//head();
-		}
-		else
-		{
-			if(count!=1)
-			{
-				printf("¿ÚÁî´íÎó£¡ÇëÖØĞÂÊäÈë£¡\n");
-				printf("Äú»¹ÓĞ%d´Î»ú»á£¡\n",--count);
-			}
-			else
-			{
-				printf("¿ÚÁî´íÎó£¡°´ÈÎÒâ¼üÍË³öÏµÍ³£¡\n");
-				getch();exit(1);
-			}
-		}
-	}
+  printf("æ¬¢è¿ä½¿ç”¨å­¦ç”Ÿç®¡ç†ç³»ç»Ÿ\n");
+  printf("è¯·è¾“å…¥å£ä»¤ï¼\n");
+  char get[10], pw[] = "123"; //å¯†ç 
+  int count = 3;
+  while (count)
+  {
+    gets(get);
+    if (strcmp(get, pw) == 0)
+    {
+      printf("å£ä»¤æ­£ç¡®ï¼æ­£åœ¨è¿›å…¥ç³»ç»Ÿ...\n");
+      Sleep(500); // head();
+    }
+    else
+    {
+      if (count != 1)
+      {
+        printf("å£ä»¤é”™è¯¯ï¼è¯·é‡æ–°è¾“å…¥ï¼\n");
+        printf("æ‚¨è¿˜æœ‰%dæ¬¡æœºä¼šï¼\n", --count);
+      }
+      else
+      {
+        printf("å£ä»¤é”™è¯¯ï¼æŒ‰ä»»æ„é”®é€€å‡ºç³»ç»Ÿï¼\n");
+        getch();
+        exit(1);
+      }
+    }
+  }
 }

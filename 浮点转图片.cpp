@@ -4,37 +4,37 @@
 
 #define DIM 1000
 
-void pixel_write(int,int);
+void pixel_write(int, int);
 FILE *fp;
 
 int main()
 {
-    fp = fopen("image.ppm","wb");
-    if (!fp)
-    {
-        return -1;
-    }
+  fp = fopen("image.ppm", "wb");
+  if (!fp)
+  {
+    return -1;
+  }
 
-    fprintf(fp, "P6\n%d %d\n255\n", DIM, DIM);
-    for(int j=0;j<DIM;j++)
+  fprintf(fp, "P6\n%d %d\n255\n", DIM, DIM);
+  for (int j = 0; j < DIM; j++)
+  {
+    for (int i = 0; i < DIM; i++)
     {
-        for(int i=0;i<DIM;i++)
-        {
-            pixel_write(i,j);
-        }
+      pixel_write(i, j);
     }
-    fclose(fp);
+  }
+  fclose(fp);
 
-    return 0;
+  return 0;
 }
 
 void pixel_write(int i, int j)
 {
-    static unsigned char color[3];
-    float t = j + i*0.001f;
-    memcpy(color, &t, 3);
-    fwrite(color, 1, 3, fp);
+  static unsigned char color[3];
+  float t = j + i * 0.001f;
+  memcpy(color, &t, 3);
+  fwrite(color, 1, 3, fp);
 
-    // ÆäÊµ¸ü¼òµ¥´Ö±¬µÄ·½Ê½ÊÇ
-     //fwrite(&t, 1, 3, fp);
+  // å…¶å®žæ›´ç®€å•ç²—çˆ†çš„æ–¹å¼æ˜¯
+  // fwrite(&t, 1, 3, fp);
 }

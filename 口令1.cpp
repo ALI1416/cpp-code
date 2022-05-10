@@ -1,31 +1,32 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#define PW "123"//ÃÜÂë
-#define N 8//×î´óÊäÈëÉÏÏŞ
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define PW "123" //å¯†ç 
+#define N 8      //æœ€å¤§è¾“å…¥ä¸Šé™
 
 void main()
 {
-	char s[]=PW;
-	char *t=(char *)malloc(N);
-	while(1)
-	{
-		gets(t);
-		if(strlen(t)>N)
-		{
-			printf("ÃÜÂëÒç³ö£¡\n");
-		}
-		else
-		{
-			if(strcmp(s,t)==0)
-			{
-				printf("ÃÜÂëÕıÈ·£¡\n");
-				break;
-			}
-			else
-			{
-				printf("ÃÜÂë´íÎó£¡\n");
-			}
-		}
-	}
+  char s[] = PW;
+  char *t = (char *)malloc(N);
+  while (1)
+  {
+    gets(t);
+    if (strlen(t) > N)
+    {
+      printf("å¯†ç æº¢å‡ºï¼\n");
+    }
+    else
+    {
+      if (strcmp(s, t) == 0)
+      {
+        printf("å¯†ç æ­£ç¡®ï¼\n");
+        break;
+      }
+      else
+      {
+        printf("å¯†ç é”™è¯¯ï¼\n");
+      }
+    }
+  }
 }

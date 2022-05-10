@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<string.h>
-#include<math.h>
-#include<conio.h>
-#include<windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <math.h>
+#include <conio.h>
+#include <windows.h>
 
 void rand(int x);
 int scan();
@@ -12,58 +12,75 @@ int num(char s[]);
 
 void main()
 {
-	SetConsoleTitle("³éÇ©Æ÷"); //±êÌâ
-	srand((unsigned)time(NULL));
-	printf("**************************\n");
-	printf("******»¶Ó­Ê¹ÓÃ³éÇ©Æ÷******\n");
-	printf("**************************\n\n");
-	printf("---------Ê¹ÓÃ·½·¨---------\n");	
-	printf("--°´»Ø³µ³éÇ©£¬°´ÆäËûÍË³ö--\n");
-	rand(scan());
+  //æ ‡é¢˜
+  SetConsoleTitle("æŠ½ç­¾å™¨");
+  srand((unsigned)time(NULL));
+  printf("**************************\n");
+  printf("******æ¬¢è¿ä½¿ç”¨æŠ½ç­¾å™¨******\n");
+  printf("**************************\n\n");
+  printf("---------ä½¿ç”¨æ–¹æ³•---------\n");
+  printf("--æŒ‰å›è½¦æŠ½ç­¾ï¼ŒæŒ‰å…¶ä»–é€€å‡º--\n");
+  rand(scan());
 }
 
-int scan()//ÊäÈë×Ö·û´®
+//è¾“å…¥å­—ç¬¦ä¸²
+int scan()
 {
-	while(1)
-	{
-		char x[100];
-		int t;
-		printf("\nÇëÊäÈëÑ§ÉúÊıÁ¿");
-		gets(x);
-		t=num(x);
-		if(t>0){return t;break;}
-		else {printf("\nÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë\n");continue;}
-	}
+  while (1)
+  {
+    char x[100];
+    int t;
+    printf("\nè¯·è¾“å…¥å­¦ç”Ÿæ•°é‡");
+    gets(x);
+    t = num(x);
+    if (t > 0)
+    {
+      return t;
+      break;
+    }
+    else
+    {
+      printf("\nè¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
+      continue;
+    }
+  }
 }
-int num(char s[])//×Ö·û´®×ª´¿Êı×Ö
+
+//å­—ç¬¦ä¸²è½¬çº¯æ•°å­—
+int num(char s[])
 {
-	int i=0,n=0,err=0,length=0,num=0;
-	length=strlen(s);
-	for(i=0;i<length;i++)
-		if(s[i]<'0'||s[i]>'9') {err=1;break;}
-		if(err==0)
-		{
-			for(i=0;i<length;i++)
-			{
-				n=((int)s[i])-48;
-				num+=(pow(10,(length-i-1))*n);
-			}
-			return num;
-		}
-		else return -1;
+  int i = 0, n = 0, err = 0, length = 0, num = 0;
+  length = strlen(s);
+  for (i = 0; i < length; i++)
+    if (s[i] < '0' || s[i] > '9')
+    {
+      err = 1;
+      break;
+    }
+  if (err == 0)
+  {
+    for (i = 0; i < length; i++)
+    {
+      n = ((int)s[i]) - 48;
+      num += (pow(10, (length - i - 1)) * n);
+    }
+    return num;
+  }
+  else
+    return -1;
 }
 
-void rand(int x)//Ëæ»úÊı
+//éšæœºæ•°
+void rand(int x)
 {
-	while(1)
-	{
-		printf("ÕıÔÚ³éÇ©ÖĞ....\n");
-		Sleep(300);//ÑÓÊ±300ms
-		printf("³éÈ¡µÄÑ§ºÅÎª£º%d\n",rand()%x+1);
-		if(getch()==13) continue;
-		else break;
-	}
+  while (1)
+  {
+    printf("æ­£åœ¨æŠ½ç­¾ä¸­....\n");
+    Sleep(300); //å»¶æ—¶300ms
+    printf("æŠ½å–çš„å­¦å·ä¸ºï¼š%d\n", rand() % x + 1);
+    if (getch() == 13)
+      continue;
+    else
+      break;
+  }
 }
-
-
-

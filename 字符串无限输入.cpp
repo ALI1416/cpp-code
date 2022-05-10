@@ -1,35 +1,36 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #define N 10
 #define M 8
 
-char *inf()//ÎÞÏÞÖÆÊäÈë
+//æ— é™åˆ¶è¾“å…¥
+char *inf()
 {
-	char *arr=(char *)malloc(sizeof(char)*N);//±£´æ×Ö·û´®£¬³õÊ¼³¤¶ÈÉè¶¨ÎªN
-	char input;//±£´æÒ»¸ö´ÓÊäÈëÁ÷´«ÈëµÄ×Ö·û
-	int strSize=N;//¼ÆËãarr×Ö·û´®ÄÜ´æ´¢µÄ×î´ó³¤¶È
-	int Ngth=0;//´æ´¢arrÒÑ¾­´æ´¢µÄ×Ö·û´®³¤¶È
-	while((input=getc(stdin))!= '\n')//´ÓÊäÈëÁ÷¶ÁÈ¡Ò»¸ö×Ö·û£¬Èç¹ûÕâ¸ö×Ö·û²»ÊÇ\n
-	{
-		arr[Ngth]=input;//½«Õâ¸ö×Ö·û·ÅÈëarr
-		++Ngth;//arrÒÑ´æ´¢³¤¶È¼Ó1
-		if(Ngth==strSize)// Èç¹û×Ö·û´®³¤¶ÈÒÑ¾­³¬¹ýÁËarrµÄ×î´óÄÜ´æ´¢³¤¶È
-		{
-			arr=(char *)realloc(arr,strSize+N);//ÔÚÔ­À´arrµÄ´óÐ¡ÉÏ£¬ÖØÐÂÉêÇëÒ»¸ö¶àN³¤¶ÈµÄ¿Õ¼ä
-			strSize+=N;//½«arrÄÜ´æ´¢µÄ×î´ó³¤¶È¸üÐÂ
-		}
-	}
-	arr[Ngth]='\0';//ÔÚ×Ö·û´®Ä©Î²¼Ó'\0'ÒÔÊ¾½áÊø
-	return arr;
+  char *arr = (char *)malloc(sizeof(char) * N); //ä¿å­˜å­—ç¬¦ä¸²ï¼Œåˆå§‹é•¿åº¦è®¾å®šä¸ºN
+  char input;                                   //ä¿å­˜ä¸€ä¸ªä»Žè¾“å…¥æµä¼ å…¥çš„å­—ç¬¦
+  int strSize = N;                              //è®¡ç®—arrå­—ç¬¦ä¸²èƒ½å­˜å‚¨çš„æœ€å¤§é•¿åº¦
+  int Ngth = 0;                                 //å­˜å‚¨arrå·²ç»å­˜å‚¨çš„å­—ç¬¦ä¸²é•¿åº¦
+  while ((input = getc(stdin)) != '\n')         //ä»Žè¾“å…¥æµè¯»å–ä¸€ä¸ªå­—ç¬¦ï¼Œå¦‚æžœè¿™ä¸ªå­—ç¬¦ä¸æ˜¯\n
+  {
+    arr[Ngth] = input;   //å°†è¿™ä¸ªå­—ç¬¦æ”¾å…¥arr
+    ++Ngth;              // arrå·²å­˜å‚¨é•¿åº¦åŠ 1
+    if (Ngth == strSize) //å¦‚æžœå­—ç¬¦ä¸²é•¿åº¦å·²ç»è¶…è¿‡äº†arrçš„æœ€å¤§èƒ½å­˜å‚¨é•¿åº¦
+    {
+      arr = (char *)realloc(arr, strSize + N); //åœ¨åŽŸæ¥arrçš„å¤§å°ä¸Šï¼Œé‡æ–°ç”³è¯·ä¸€ä¸ªå¤šNé•¿åº¦çš„ç©ºé—´
+      strSize += N;                            //å°†arrèƒ½å­˜å‚¨çš„æœ€å¤§é•¿åº¦æ›´æ–°
+    }
+  }
+  arr[Ngth] = '\0'; //åœ¨å­—ç¬¦ä¸²æœ«å°¾åŠ '\0'ä»¥ç¤ºç»“æŸ
+  return arr;
 }
 
 void main()
 {
-	char *s=inf();
-	int len=strlen(s);
-	if(len>0&&len<=M)
-		printf("×Ö·û´®£º%s£¬³¤¶È£º%d\n",s,len);
-	else
-		printf("´íÎó£¡\n");
+  char *s = inf();
+  int len = strlen(s);
+  if (len > 0 && len <= M)
+    printf("å­—ç¬¦ä¸²ï¼š%sï¼Œé•¿åº¦ï¼š%d\n", s, len);
+  else
+    printf("é”™è¯¯ï¼\n");
 }

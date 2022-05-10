@@ -1,30 +1,30 @@
-#include<afxwin.h>
-#include<windows.h>
-#include<stdio.h>
-#pragma comment (lib,"User32.lib")
+#include <afxwin.h>
+#include <windows.h>
+#include <stdio.h>
+#pragma comment(lib, "User32.lib")
 
 void main()
 {
-	SetConsoleTitle("Ê°É«Æ÷");//±êÌâ
-	system("mode con cols=30 lines=3");//Ö¸¶¨´°¿Ú´óĞ¡
-	while(1)
-	{
-		POINT point;
-		::GetCursorPos(&point);//»ñÈ¡Ö¸Õë×ø±ê
-		HWND hWnd=::GetDesktopWindow();
-		HDC hdc=::GetDC(hWnd);
-		int x=point.x,y=point.y;
-		COLORREF pixel=::GetPixel(hdc,x,y);
-		if(pixel!=CLR_INVALID) //»ñÈ¡×ø±êRGBÖµ
-		{
-			int red = GetRValue(pixel);
-			int green = GetGValue(pixel);
-			int blue = GetBValue(pixel);
-			printf("×ø ±ê:(%d,%d)\nRGBÖµ:%X%X%X",x,y,red,green,blue);
-		}
-		else 
-			printf("Ô½½ç£¡\n");
-		Sleep(200);//ÑÓÊ±
-		system("cls");//ÇåÆÁ
-	}
+  SetConsoleTitle("æ‹¾è‰²å™¨");          //æ ‡é¢˜
+  system("mode con cols=30 lines=3"); //æŒ‡å®šçª—å£å¤§å°
+  while (1)
+  {
+    POINT point;
+    ::GetCursorPos(&point); //è·å–æŒ‡é’ˆåæ ‡
+    HWND hWnd = ::GetDesktopWindow();
+    HDC hdc = ::GetDC(hWnd);
+    int x = point.x, y = point.y;
+    COLORREF pixel = ::GetPixel(hdc, x, y);
+    if (pixel != CLR_INVALID) //è·å–åæ ‡RGBå€¼
+    {
+      int red = GetRValue(pixel);
+      int green = GetGValue(pixel);
+      int blue = GetBValue(pixel);
+      printf("å æ ‡:(%d,%d)\nRGBå€¼:%X%X%X", x, y, red, green, blue);
+    }
+    else
+      printf("è¶Šç•Œï¼\n");
+    Sleep(200);    //å»¶æ—¶
+    system("cls"); //æ¸…å±
+  }
 }
