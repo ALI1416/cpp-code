@@ -1,5 +1,13 @@
-# Cpp
-C语言程序
+# cpp C语言程序
+
+`学生管理系统.cpp`是本人大学时期的课程设计，已不再维护
+
+文档请看`学生成绩管理系统实验报告.docx`
+
+## 项目链接
+[Github](https://github.com/ALI1416/cpp)
+
+[Gitee](https://gitee.com/ALI1416/cpp)
 
 ## 许可证
 [![License](https://img.shields.io/badge/license-BSD-brightgreen)](https://opensource.org/licenses/BSD-3-Clause)
